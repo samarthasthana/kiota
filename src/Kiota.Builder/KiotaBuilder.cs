@@ -1101,11 +1101,11 @@ public partial class KiotaBuilder
             }
         }
     }
-    private CodeTypeBase? GetExecutorMethodReturnType(OpenApiUrlTreeNode currentNode, OpenApiSchema? schema, OpenApiOperation operation, CodeClass parentClass)
+    private CodeTypeBase? GetExecutorMethodReturnType(OpenApiUrlTreeNode currentNode, OpenApiSchema? schema, OpenApiOperation operation, CodeClass parentClass, OperationType operationType)
     {
         if (schema != null)
         {
-            return CreateModelDeclarations(currentNode, schema, operation, parentClass, "Response");
+            return CreateModelDeclarations(currentNode, schema, operation, parentClass, $"{operationType}Response");
         }
         else
         {
@@ -1152,7 +1152,7 @@ public partial class KiotaBuilder
                                     operation.Summary)
                                     .CleanupDescription(),
                 },
-                ReturnType = GetExecutorMethodReturnType(currentNode, schema, operation, parentClass) ?? throw new InvalidSchemaException(),
+                ReturnType = GetExecutorMethodReturnType(currentNode, schema, operation, parentClass, operationType) ?? throw new InvalidSchemaException(),
                 Deprecation = deprecationInformation,
             };
 
